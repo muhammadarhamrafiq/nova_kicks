@@ -1,4 +1,4 @@
-from beanie import Document, Insert, Replace, before_event
+from beanie import Document, Insert, Replace, Update, before_event
 from pwdlib import PasswordHash
 
 
@@ -9,7 +9,7 @@ class User(Document):
     username: str
     password: str
 
-    @before_event(Insert, Replace)
+    @before_event([Insert, Replace, Update])
     def hash_password(self) -> None:
         # check if the password is already hashed
         if not self.password.startswith('$argon2'):

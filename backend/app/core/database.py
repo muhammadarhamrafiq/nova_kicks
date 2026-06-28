@@ -4,7 +4,7 @@ from beanie import init_beanie
 from pymongo import AsyncMongoClient
 
 from app.core.config import settings
-from app.models.user import User
+from app.models import Category, User
 
 
 class Database:
@@ -19,7 +19,9 @@ class Database:
         try:
             self.client = AsyncMongoClient[dict[str, Any]](settings.mongo_uri)
 
-            await init_beanie(database=self.client[settings.mongo_db_name], document_models=[User])
+            await init_beanie(
+                database=self.client[settings.mongo_db_name], document_models=[User, Category]
+            )
 
             print('Connected to Database')
         except Exception as e:

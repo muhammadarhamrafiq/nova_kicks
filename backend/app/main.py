@@ -23,6 +23,6 @@ app: FastAPI = FastAPI(lifespan=lifespan)
 
 
 @app.get('/')
-def read_root() -> dict[str, Any]:
+async def read_root() -> dict[str, Any]:
     db_instance = app.state.db
     return {'Hello': 'Welcome to Nova Kicks API!', 'db_connected': db_instance.client is not None}
